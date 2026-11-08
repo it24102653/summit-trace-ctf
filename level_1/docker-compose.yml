@@ -1,0 +1,22 @@
+version: "3.9"
+
+services:
+  web01-terminal:
+    build: .
+    container_name: ctf-web01-terminal
+    ports:
+      - "8081:8080"     # container now listens on 8080 (unprivileged nginx)
+    restart: unless-stopped
+    networks:
+      - ctf-web01-net
+    read_only: true
+    tmpfs:
+      - /tmp            # unprivileged nginx writes temp/cache files to /tmp
+    cap_drop:
+      - ALL
+    security_opt:
+      - no-new-privileges:true
+
+networks:
+  ctf-web01-net:
+    driver: bridge

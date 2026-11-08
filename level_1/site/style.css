@@ -1,0 +1,449 @@
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;1,9..144,500&family=Public+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;600&display=swap');
+
+:root {
+  --paper: #faf6ec;
+  --paper-card: #fffdf8;
+  --line: #d8c9a8;
+  --brown: #8a5a34;
+  --brown-dark: #6b4324;
+  --green: #5c7a4d;
+  --green-dark: #47603c;
+  --ink: #3a2f22;
+  --ink-soft: #6b5c46;
+  --red: #b5432f;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: 'Public Sans', sans-serif;
+  overflow-x: hidden;
+  position: relative;
+}
+
+/* Trail-tape striped border, brown/green, like a hiking permit ribbon */
+.trail-tape {
+  height: 8px;
+  width: 100%;
+  background: repeating-linear-gradient(
+    45deg,
+    var(--brown) 0px, var(--brown) 16px,
+    var(--green) 16px, var(--green) 32px
+  );
+}
+
+/* Faint line-art mountain range, low contrast, just a horizon detail */
+.mountains-back {
+  position: fixed;
+  left: 0; right: 0; bottom: 0;
+  height: 140px;
+  pointer-events: none;
+  background-image:
+    linear-gradient(180deg, transparent 0%, rgba(92,122,77,0.06) 100%);
+  border-top: 1.5px solid rgba(92,122,77,0.25);
+  clip-path: polygon(
+    0% 100%, 0% 70%, 9% 55%, 18% 66%, 27% 45%, 36% 62%,
+    46% 38%, 56% 58%, 65% 48%, 75% 64%, 85% 50%, 94% 62%,
+    100% 52%, 100% 100%
+  );
+  z-index: -1;
+}
+
+.topbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 14px 24px;
+  border-bottom: 1px solid var(--line);
+  background: var(--paper-card);
+}
+
+.brand {
+  font-family: 'Fraunces', serif;
+  font-style: italic;
+  font-size: 1.05rem;
+  letter-spacing: 0.3px;
+  color: var(--brown-dark);
+}
+
+.topbar-actions { display: flex; gap: 12px; align-items: center; }
+
+.score-display {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.85rem;
+  padding: 6px 12px;
+  border: 1px solid var(--green);
+  border-radius: 3px;
+  background: rgba(92,122,77,0.08);
+  color: var(--green-dark);
+  transition: 0.2s ease;
+}
+.score-display.dropped {
+  color: var(--red);
+  border-color: var(--red);
+  background: rgba(181,67,47,0.08);
+}
+
+.icon-btn {
+  background: transparent;
+  border: 1px solid var(--brown);
+  color: var(--brown-dark);
+  padding: 6px 14px;
+  border-radius: 3px;
+  cursor: pointer;
+  font-family: 'Public Sans', sans-serif;
+  font-size: 0.85rem;
+  transition: 0.15s ease;
+}
+.icon-btn:hover {
+  background: var(--brown);
+  color: #fff8ec;
+}
+
+.wrap {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 60px 20px;
+  position: relative;
+  z-index: 2;
+}
+
+/* The journal page itself */
+.terminal-card {
+  width: 100%;
+  max-width: 460px;
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  padding: 30px 32px 36px;
+  background: var(--paper-card);
+  box-shadow: 0 12px 34px rgba(90,74,53,0.12);
+  position: relative;
+}
+.terminal-card::before {
+  content: "";
+  position: absolute;
+  top: 12px; right: 16px;
+  width: 32px; height: 32px;
+  border: 1.5px solid var(--green);
+  border-radius: 50%;
+  opacity: 0.5;
+  background:
+    linear-gradient(var(--green), var(--green)) center / 1.5px 20px no-repeat,
+    linear-gradient(90deg, var(--green), var(--green)) center / 20px 1.5px no-repeat;
+}
+
+.entry-date {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.7rem;
+  letter-spacing: 0.5px;
+  color: var(--ink-soft);
+  margin: 0 0 4px;
+}
+
+h1.glitch {
+  font-family: 'Fraunces', serif;
+  font-weight: 600;
+  font-size: 1.7rem;
+  margin: 0 0 8px;
+  color: var(--ink);
+  border-bottom: 2px dashed var(--line);
+  padding-bottom: 10px;
+}
+
+.subtitle {
+  font-size: 0.85rem;
+  color: var(--ink-soft);
+  margin: 0 0 14px;
+}
+
+.tag-easy {
+  background: rgba(92,122,77,0.1);
+  border: 1px solid var(--green);
+  padding: 2px 9px;
+  border-radius: 3px;
+  color: var(--green-dark);
+  font-weight: 600;
+  letter-spacing: 0.3px;
+  font-size: 0.78rem;
+}
+
+.flavor {
+  font-size: 0.88rem;
+  line-height: 1.55;
+  color: var(--ink-soft);
+  border-left: 2px solid var(--brown);
+  padding-left: 12px;
+  margin-bottom: 14px;
+}
+
+.scoring-note {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.72rem;
+  color: var(--ink-soft);
+  margin-bottom: 22px;
+}
+
+form { display: flex; flex-direction: column; gap: 6px; }
+
+label {
+  font-size: 0.75rem;
+  color: var(--ink-soft);
+  margin-top: 8px;
+  font-weight: 600;
+}
+
+input {
+  background: #fbf6ea;
+  border: none;
+  border-bottom: 1.5px solid var(--line);
+  color: var(--ink);
+  padding: 10px 4px;
+  font-family: 'Public Sans', sans-serif;
+  border-radius: 0;
+  outline: none;
+  font-size: 0.95rem;
+}
+input:focus {
+  border-bottom-color: var(--brown);
+}
+input[readonly] {
+  color: var(--ink-soft);
+  cursor: not-allowed;
+}
+
+.btn-login {
+  margin-top: 20px;
+  background: var(--brown);
+  color: #fff8ec;
+  border: none;
+  padding: 12px;
+  font-weight: 700;
+  letter-spacing: 0.6px;
+  border-radius: 3px;
+  cursor: pointer;
+  font-family: 'Public Sans', sans-serif;
+  transition: 0.15s ease;
+}
+.btn-login:hover {
+  background: var(--brown-dark);
+}
+.btn-login:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.message {
+  margin-top: 16px;
+  min-height: 20px;
+  font-size: 0.9rem;
+}
+.message.error {
+  color: var(--red);
+  animation: shake 0.3s;
+}
+.message.success {
+  color: var(--green-dark);
+  font-weight: 600;
+}
+
+@keyframes shake {
+  0%,100% { transform: translateX(0); }
+  25% { transform: translateX(-6px); }
+  75% { transform: translateX(6px); }
+}
+
+/* Modal */
+.modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(58,47,34,0.45);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+.modal.hidden { display: none; }
+
+.modal-box {
+  background: var(--paper-card);
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  max-width: 480px;
+  width: 90%;
+  padding: 26px 28px;
+  box-shadow: 0 20px 50px rgba(58,47,34,0.25);
+  position: relative;
+  color: var(--ink);
+}
+.modal-box h2 {
+  margin-top: 0;
+  font-family: 'Fraunces', serif;
+  font-size: 1.2rem;
+  color: var(--ink);
+}
+.modal-box ul {
+  padding-left: 18px;
+  font-size: 0.85rem;
+  line-height: 1.6;
+  color: var(--ink-soft);
+}
+.modal-box code {
+  background: rgba(92,122,77,0.1);
+  padding: 1px 5px;
+  border-radius: 3px;
+  color: var(--green-dark);
+  font-family: 'IBM Plex Mono', monospace;
+}
+.modal-close {
+  position: absolute;
+  top: 10px;
+  right: 14px;
+  background: none;
+  border: none;
+  color: var(--ink-soft);
+  font-size: 1.4rem;
+  cursor: pointer;
+}
+
+/* Hint popover - styled as a trail signpost note */
+.hint-box {
+  position: fixed;
+  top: 60px;
+  right: 24px;
+  max-width: 320px;
+  background: var(--paper-card);
+  border: 1px solid var(--line);
+  border-left: 4px solid var(--brown);
+  border-radius: 3px;
+  padding: 14px 16px;
+  font-size: 0.8rem;
+  color: var(--ink-soft);
+  box-shadow: 0 10px 26px rgba(58,47,34,0.18);
+  z-index: 1000;
+}
+.hint-box.hidden { display: none; }
+
+.hint-confirm-text {
+  color: var(--brown-dark);
+  font-size: 0.75rem;
+  margin-top: 10px;
+}
+
+.btn-confirm-hint {
+  margin-top: 8px;
+  background: transparent;
+  border: 1px solid var(--brown);
+  color: var(--brown-dark);
+  padding: 6px 12px;
+  border-radius: 3px;
+  cursor: pointer;
+  font-family: 'Public Sans', sans-serif;
+  font-size: 0.75rem;
+}
+.btn-confirm-hint:hover {
+  background: var(--brown);
+  color: #fff8ec;
+}
+.btn-confirm-hint:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+/* Make hidden elements actually disappear */
+.hidden {
+  display: none !important;
+}
+
+/* Hint details after confirmation */
+#hintText {
+  margin-top: 12px;
+  color: var(--ink-soft);
+  line-height: 1.6;
+}
+
+#hintText .hint-title {
+  font-family: 'Fraunces', serif;
+  color: var(--ink);
+}
+
+/* ==========================================================
+   CHAIN-LINKED CAMPAIGN ADDITIONS
+   ========================================================== */
+
+.topbar-left { display: flex; align-items: center; }
+
+.flag-btn {
+  border-color: var(--brown) !important;
+  color: var(--brown-dark) !important;
+  font-weight: 600;
+}
+.flag-btn:hover {
+  background: var(--brown) !important;
+  color: #fff8ec !important;
+}
+.flag-btn:disabled {
+  opacity: 0.6;
+  cursor: default;
+}
+
+.story-note {
+  background: rgba(92,122,77,0.08);
+  border-left: 3px solid var(--green);
+  padding: 10px 14px;
+  font-size: 0.83rem;
+  color: var(--ink-soft);
+  margin-bottom: 16px;
+  border-radius: 3px;
+}
+
+.next-level-box {
+  background: rgba(92,122,77,0.1);
+  border: 1px solid var(--green);
+  border-radius: 4px;
+  padding: 14px 16px;
+  margin-top: 14px;
+  white-space: pre-line;
+  font-size: 0.9rem;
+  color: var(--ink);
+  font-family: 'IBM Plex Mono', monospace;
+}
+
+#flagModal input[type=text] {
+  width: 100%;
+  background: #fbf6ea;
+  border: none;
+  border-bottom: 1.5px solid var(--line);
+  color: var(--ink);
+  padding: 10px 4px;
+  font-family: 'Public Sans', sans-serif;
+  border-radius: 0;
+  margin-bottom: 10px;
+  font-size: 0.95rem;
+}
+#flagModal input[type=text]:focus {
+  outline: none;
+  border-bottom-color: var(--brown);
+}
+
+#flagModal button {
+  background: var(--brown);
+  color: #fff8ec;
+  border: none;
+  padding: 10px;
+  border-radius: 3px;
+  cursor: pointer;
+  font-family: 'Public Sans', sans-serif;
+  font-weight: 700;
+  width: 100%;
+}
+#flagModal button:hover { background: var(--brown-dark); }
+#flagModal button:disabled { opacity: 0.5; cursor: not-allowed; }
+
+@media (max-width: 480px) {
+  .brand { font-size: 0.85rem; }
+  .terminal-card { padding: 24px 20px 28px; }
+}

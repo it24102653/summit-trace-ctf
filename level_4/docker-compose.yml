@@ -1,0 +1,19 @@
+version: "3.9"
+
+services:
+  web04-envelope:
+    build: .
+    container_name: ctf-web04-envelope
+    ports:
+      - "8084:8000"     # browse to http://localhost:8084
+    restart: unless-stopped
+    networks:
+      - ctf-web04-net
+    cap_drop:
+      - ALL
+    security_opt:
+      - no-new-privileges:true
+
+networks:
+  ctf-web04-net:
+    driver: bridge

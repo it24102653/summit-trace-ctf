@@ -1,0 +1,23 @@
+version: "3.9"
+
+services:
+  web03-shopnest:
+    build: .
+    container_name: ctf-web03-shopnest
+    ports:
+      - "8083:8000"     # browse to http://localhost:8083
+    restart: unless-stopped
+    networks:
+      - ctf-web03-net
+    cap_drop:
+      - ALL
+    security_opt:
+      - no-new-privileges:true
+    # Not read_only: state (sessions, wordlist) lives in the
+    # running Python process's memory, not written to disk -
+    # a read-only filesystem is not required for correctness
+    # here, same reasoning as WEB-02.
+
+networks:
+  ctf-web03-net:
+    driver: bridge

@@ -1,0 +1,24 @@
+version: "3.9"
+
+services:
+  web02-blog:
+    build: .
+    container_name: ctf-web02-blog
+    ports:
+      - "8082:8000"     # browse to http://localhost:8082
+    restart: unless-stopped
+    networks:
+      - ctf-web02-net
+    cap_drop:
+      - ALL
+    security_opt:
+      - no-new-privileges:true
+    # NOTE: not read_only here, unlike WEB-01 - this app holds
+    # in-memory session/blog state as a live Python process, so
+    # a fully read-only root filesystem isn't required/relevant
+    # (no writes to the container filesystem happen at runtime
+    # either way; state lives in RAM, not on disk).
+
+networks:
+  ctf-web02-net:
+    driver: bridge

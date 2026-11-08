@@ -1,0 +1,19 @@
+version: "3.9"
+
+services:
+  web05-basecamp:
+    build: .
+    container_name: ctf-web05-basecamp
+    ports:
+      - "8085:8000"     # browse to http://localhost:8085
+    restart: unless-stopped
+    networks:
+      - ctf-web05-net
+    cap_drop:
+      - ALL
+    security_opt:
+      - no-new-privileges:true
+
+networks:
+  ctf-web05-net:
+    driver: bridge

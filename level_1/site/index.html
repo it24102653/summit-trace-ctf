@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>musni's Trail Journal // Basecamp Access</title>
+<link rel="stylesheet" href="style.css?v=3">
+</head>
+<body>
+
+  <div class="trail-tape"></div>
+  <div class="mountains-back" aria-hidden="true"></div>
+
+  <header class="topbar">
+    <div class="topbar-left">
+      <button type="button" id="flagBtn" class="icon-btn flag-btn" title="Submit Flag">🚩 Log Flag</button>
+    </div>
+    <span class="brand">⛰ MUSNI'S TRAIL JOURNAL — BASECAMP TERMINAL</span>
+    <div class="topbar-actions">
+      <span id="scoreDisplay" class="score-display">Score: 100</span>
+      <button type="button" id="hintBtn" class="icon-btn" title="Hint (-20 marks)">🧭</button>
+      <button type="button" id="readmeBtn" class="icon-btn" title="Field Notes">Field Notes</button>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <div class="terminal-card">
+
+      <p class="entry-date">Day 1 · Trailhead Basecamp</p>
+      <h1 class="glitch">Breach The Terminal</h1>
+      <p class="subtitle">Difficulty: <span class="tag-easy">EASY TRAIL</span> — Web / Client-Side Security</p>
+
+      <p class="story-note">
+        📖 <strong>Chapter 1 — The Trip Begins:</strong> Before musni set off on
+        his hiking trip, he left an old laptop logged into ShadowNet, an
+        internal terminal he used for personal notes. Whoever finds a way in
+        first might learn where his journey leads next...
+      </p>
+
+      <p class="flavor">
+        An old ShadowNet admin panel was left exposed on the basecamp network.
+        Rumor has it the login check happens entirely in the browser — and
+        whoever built it wasn't exactly careful about how they hid the
+        password.
+      </p>
+
+      <p class="scoring-note">
+        Start: 100 marks · −5 marks per failed attempt · −20 marks if you use the hint
+      </p>
+
+      <form id="loginForm" autocomplete="off">
+        <label for="username">Username</label>
+        <input type="text" id="username" value="admin" readonly>
+
+        <label for="password">Password</label>
+        <input type="password" id="password" placeholder="Enter password..." autofocus>
+
+        <button type="submit" class="btn-login">AUTHENTICATE</button>
+      </form>
+
+      <p id="message" class="message"></p>
+
+      <div id="hintBox" class="hint-box hidden">
+        <div id="hintConfirmation">
+          <p id="hintConfirmText" class="hint-confirm-text">Viewing this hint will deduct 20 marks. Are you sure?</p>
+          <button id="confirmHint" class="btn-confirm-hint" type="button">Yes, show me anyway</button>
+        </div>
+        <div id="hintText" class="hidden">
+          <p class="hint-title">💡 <strong>Hint:</strong></p>
+          <p>The password is Base64 encoded in the JavaScript source code.</p>
+          <p>Look for the variable <code>ENC_PASS</code>. The value looks like random text, but it is Base64 encoded.</p>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- README Modal -->
+  <div id="readmeModal" class="modal hidden">
+    <div class="modal-box">
+      <button type="button" class="modal-close" id="closeReadme">&times;</button>
+      <h2>Field Notes — WEB-01: Breach The Terminal</h2>
+      <ul>
+        <li><strong>Domain:</strong> Web / Client-Side Security</li>
+        <li><strong>Difficulty:</strong> Easy</li>
+        <li><strong>Scenario:</strong> A ShadowNet admin login panel checks credentials
+            entirely in client-side JavaScript. The username is public. The real
+            password never appears in plain text anywhere in the page — but the
+            logic to reveal it does.</li>
+        <li><strong>Task:</strong> Find the real password and log in as <code>admin</code>.</li>
+        <li><strong>Scoring:</strong> Start at 100 marks. Each failed login attempt costs
+            5 marks. Using the hint costs 20 marks one time. Your final score is shown
+            once you successfully log in.</li>
+        <li><strong>Flag format:</strong> <code>CTF{...}</code></li>
+        <li><strong>Tools:</strong> Browser DevTools (Inspect / View Source / Network / Console),
+            and any Base64 decoder of your choice.</li>
+      </ul>
+      <button type="button" onclick="document.getElementById('readmeModal').classList.add('hidden')">Close</button>
+    </div>
+  </div>
+
+  <!-- Flag Submission Modal -->
+  <div id="flagModal" class="modal hidden">
+    <div class="modal-box">
+      <button type="button" class="modal-close" id="closeFlagModal">&times;</button>
+      <h2>🚩 Log This Chapter's Flag</h2>
+      <p>Once you've found this level's flag, paste it below to confirm the
+         chapter is complete and unlock the next leg of the trail.</p>
+      <input type="text" id="flagInput" placeholder="CTF{...}" autocomplete="off">
+      <button type="button" id="submitFlagBtn">Submit Flag</button>
+      <p id="flagMessage" class="message"></p>
+      <div id="nextLevelReveal" class="next-level-box hidden"></div>
+    </div>
+  </div>
+
+  <script src="script.js?v=3"></script>
+</body>
+</html>

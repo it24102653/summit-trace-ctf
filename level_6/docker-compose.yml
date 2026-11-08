@@ -1,0 +1,19 @@
+version: "3.9"
+
+services:
+  web06-final:
+    build: .
+    container_name: ctf-web06-final
+    ports:
+      - "8086:8000"     # browse to http://localhost:8086
+    restart: unless-stopped
+    networks:
+      - ctf-web06-net
+    cap_drop:
+      - ALL
+    security_opt:
+      - no-new-privileges:true
+
+networks:
+  ctf-web06-net:
+    driver: bridge
